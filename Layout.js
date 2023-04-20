@@ -73,19 +73,22 @@ class Layout extends React.Component {
     this.handleResize();
     window.addEventListener("resize", this.handleResize.bind(this));
   }
-
+  
   componentWillUnmount() {
+    this.setState = (state,callback)=>{
+        return;
+    };
     this.setState({ mounted: false });
     window.removeEventListener("resize", this.handleResize.bind(this));
   }
 
   handleResize() {
-    if (window.innerWidth <= 768) {
+    if (this.state.mounted && window.innerWidth <= 768) {
       this.props.dispatch(toggleSidebar());
-    } else if (window.innerWidth >= 768) {
+    } else if (this.state.mounted && window.innerWidth >= 768) {
       this.props.dispatch(openSidebar());
     }
-  }
+  }  
 
   handleCloseSidebar(e) {
     if (e.target.closest("#sidebar-drawer") == null && this.props.sidebarOpened && window.innerWidth <= 768) {
