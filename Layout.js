@@ -54,7 +54,8 @@ class Layout extends React.Component {
     this.state = {
       lang: cookies.get('i18lang') || 'ES',
       countries: countries,
-      customLabels: customLabels
+      customLabels: customLabels,
+      mounted: false 
     };
 
 
@@ -68,12 +69,13 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
-
+    this.setState({ mounted: true });
     this.handleResize();
     window.addEventListener("resize", this.handleResize.bind(this));
   }
 
   componentWillUnmount() {
+    this.setState({ mounted: false });
     window.removeEventListener("resize", this.handleResize.bind(this));
   }
 
